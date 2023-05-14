@@ -8,11 +8,12 @@ import {
   StyleSheet,
   Button,
   Pressable,
-  Modal
+  Modal,
+  FlatList
 } from 'react-native'
 
 import Formulario from './src/components/Formulario';
-
+import Paciente from './src/components/Paciente';
 const nuevaCitaHandler = () =>{
   console.log('diste click nueva cita handler')
 }    
@@ -33,7 +34,22 @@ const App = () => {
         <Text style={styles.btnTextoNuevaCita}>Nueva Cita</Text>
       </Pressable>
 
-      {pacientes.length === 0 ? <Text style={styles.noPacientes}>No hay pacientes aún</Text> : <Text>Si hay pacientes</Text> }
+      {pacientes.length === 0 ? 
+        <Text style={styles.noPacientes}>No hay pacientes aún</Text> : 
+        <FlatList
+          data={pacientes}
+          keyExtractor={ (item) => item.id }
+          renderItem={(item) => {
+              return(
+                <Paciente 
+                  item = {item}
+                />
+              )
+
+            }
+          }
+        />
+      }
 
       <Formulario
         modalVisible={modalVisible} 
@@ -73,6 +89,12 @@ const styles = StyleSheet.create({
       fontSize: 18,
       fontWeight: '900',
       textTransform: 'uppercase'
+   },
+   noPacientes:{
+     marginTop: 40,
+     textAlign: 'center',
+     fontSize: 25,
+     fontWeight: '600'
    }
 })
 
