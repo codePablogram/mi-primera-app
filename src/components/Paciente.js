@@ -1,7 +1,7 @@
 import React, { useSyncExternalStore } from 'react'
 import { Text, View, StyleSheet, Pressable } from 'react-native'
-const Paciente = ({item}) => {
-    const {paciente, fecha} = item
+const Paciente = ({item, setModalVisible, pacienteEditar}) => {
+    const {paciente, fecha, id} = item
 
     const formatearFecha = fecha => {
         const nuevaFecha = new Date(fecha)
@@ -19,7 +19,14 @@ const Paciente = ({item}) => {
             <Text style={styles.texto}>{paciente}</Text>
             <Text style={styles.fecha}>{formatearFecha(fecha)}</Text>
             <View style={styles.contenedorBotones}>
-                <Pressable style={[styles.btn, styles.btnEditar]}>
+                <Pressable 
+                    style={[styles.btn, styles.btnEditar]}
+                    onLongPress={() =>{
+                            setModalVisible(true)
+                            pacienteEditar(id)
+                        } 
+                    }
+                >
                     <Text style={styles.btnTexto}>Editar</Text>
                 </Pressable>
                 <Pressable style={[styles.btn, styles.btnEliminar]}>
