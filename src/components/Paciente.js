@@ -32,7 +32,7 @@ const Paciente = ({item, setModalVisible, pacienteEditar}) => {
                 <Pressable style={[styles.btn, styles.btnEliminar]}>
                     <Text style={styles.btnTexto}>Eliminar</Text>
                 </Pressable>
-            </View>
+            </View> 
         </View>
     )
 }  

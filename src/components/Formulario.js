@@ -1,30 +1,45 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {Modal, Text, SafeAreaView, StyleSheet, TextInput, View, ScrollView, Pressable, Alert} from 'react-native'
 import DatePicker from 'react-native-date-picker'
 
-const Formulario = ({modalVisible, setModalVisible, pacientes, setPacientes}) => {
+const Formulario = ({modalVisible, setModalVisible, pacientes, setPacientes, paciente: pacienteObj}) => {
 
 
     const [paciente , setPaciente] = useState('')
+    const [id , setId] = useState('')
     const [propietario , setPropietario] = useState('')
     const [email , setEmail] = useState('')
     const [telefono , setTelefono] = useState('')
     const [fecha , setFecha] = useState(new Date())  
     const [sintomas , setSintomas] = useState('')
-   
+    
+  
+    useEffect(() => {
+        if(Object.keys(pacienteObj).length > 0){
+            setPaciente(pacienteObj.paciente)
+            setPropietario(pacienteObj.propietario)
+            setEmail(pacienteObj.Email)
+            setTelefono(pacienteObj.telefono)
+            setFecha(pacienteObj.fecha)
+            setPaciente(pacienteObj.paciente)
+        }else{
+            console.log('no hay nada')
+        }
+    },[])   
+
     const handleCita = () => {
         //Validar
         if([paciente, propietario, email, fecha, sintomas].includes('')){
             Alert.alert(
-                'Error',
+                'Error',  
                 'Todos los campos son obligatorios', 
             )
 
             return 
         }
+        // Revisar si es nuevo o edición
 
         const nuevoPaciente = {
-            id: Date.now(),
             paciente,
             propietario,
             email,
@@ -32,7 +47,16 @@ const Formulario = ({modalVisible, setModalVisible, pacientes, setPacientes}) =>
             fecha,
             sintomas
         }
-        setPacientes([...pacientes, nuevoPaciente])
+        if(id){
+            //Editando
+            nuevoPaciente.id = id
+            console.log('Edicion: ', nuevoPaciente)
+            return
+        }else{
+            //Nuevo Paciente
+            nuevoPaciente.id = Date.now()
+            setPacientes([...pacientes, nuevoPaciente])
+        }
         setModalVisible(!modalVisible)
 
         setPaciente('')

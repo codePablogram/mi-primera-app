@@ -16,7 +16,10 @@ import Formulario from './src/components/Formulario';
 import Paciente from './src/components/Paciente';
 const nuevaCitaHandler = () =>{
   console.log('diste click nueva cita handler')
-}    
+}   
+const editarCita = () => {
+  console.log('editar cita')
+}
 const App = () => {
 
   //Los Hooks van en la parte superior
@@ -31,14 +34,16 @@ const App = () => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.titulo}>Administrador de Citas {''} 
       <Text style={styles.tituloBold}>Veterinarias</Text>
-      </Text>
-      <Pressable
-        onPress={ () => setModalVisible(!modalVisible) }
+      </Text>     
+      <Pressable 
+        onPress={ () => 
+          setModalVisible(true)
+        }
         style={styles.btnNuevaCita}
       >
         <Text style={styles.btnTextoNuevaCita}>Nueva Cita</Text>
       </Pressable>
-
+ 
       {pacientes.length === 0 ? 
         <Text style={styles.noPacientes}>No hay pacientes aún</Text> : 
         <FlatList
@@ -64,6 +69,7 @@ const App = () => {
         setModalVisible={setModalVisible}
         pacientes={pacientes}
         setPacientes={setPacientes}
+        paciente={paciente}
       />
     </SafeAreaView>
   );
