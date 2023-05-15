@@ -13,19 +13,7 @@ const Formulario = ({modalVisible, setModalVisible, pacientes, setPacientes, pac
     const [fecha , setFecha] = useState(new Date())  
     const [sintomas , setSintomas] = useState('')
     
-  
-    useEffect(() => {
-        if(Object.keys(pacienteObj).length > 0){
-            setPaciente(pacienteObj.paciente)
-            setPropietario(pacienteObj.propietario)
-            setEmail(pacienteObj.Email)
-            setTelefono(pacienteObj.telefono)
-            setFecha(pacienteObj.fecha)
-            setPaciente(pacienteObj.paciente)
-        }else{
-            console.log('no hay nada')
-        }
-    },[])   
+ 
 
     const handleCita = () => {
         //Validar
@@ -47,16 +35,8 @@ const Formulario = ({modalVisible, setModalVisible, pacientes, setPacientes, pac
             fecha,
             sintomas
         }
-        if(id){
-            //Editando
-            nuevoPaciente.id = id
-            console.log('Edicion: ', nuevoPaciente)
-            return
-        }else{
-            //Nuevo Paciente
-            nuevoPaciente.id = Date.now()
-            setPacientes([...pacientes, nuevoPaciente])
-        }
+        setPacientes([...pacientes, nuevoPaciente])  
+        
         setModalVisible(!modalVisible)
 
         setPaciente('')
